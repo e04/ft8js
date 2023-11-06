@@ -2,8 +2,8 @@
 
 Thanks to [ft8_lib](https://github.com/kgoba/ft8_lib), we can encode/decode in a variety of environments.
 
-I've compiled it into WebAssembly (WASM) and created experimental JavaScript code for seamless integration.
-
+This repository compiled the code into WebAssembly (WASM) and created JavaScript code for seamless integration.
+　
 ## Demo
 
 https://e04.github.io/ft8js/example/browser/index.html
@@ -18,7 +18,7 @@ or
 
 `npm i ft8js`
 
-For code examples, please refer to the 'example' directory.
+For code examples, please refer to the `example` directory.
 
 ## Development
 
