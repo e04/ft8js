@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>encode</title>
+  </head>
+  <body>
+    <section>
+      <h2>ENCODE</h2>
+      <input type="text" id="input" value="CQ JK1IFA PM95" />
+      <button onclick="play()">PLAY</button>
+    </section>
+    <secion>
+      <h2>DECODE</h2>
+      <div>
+        <progress id="time" value="0" max="14"></progress>
+        <button id="start-decode" onclick="startDecode()">START</button>
+      </div>
+      <textarea id="output" style="width: 500px; height: 500px"></textarea>
+    </secion>
+    <script type="module">
+      import { encode, decode } from "../../dist/index.js";
+      const SAMPLE_RATE = 12000;
+
+      window.play = async () => {
+        const freq = 1000;
+        const text = document.getElementById("input").value;
+        const result = await encode(text, freq);
+        const audioCtx = new AudioContext();
+        const audioBuffer = audioCtx.createBuffer(1, result.length, 12000);
+        audioBuffer.getChannelData(0).set(result);
+        const source = audioCtx.createBufferSource();
+        source.buffer = audioBuffer;
+        const gainNode = audioCtx.createGain();
+        gainNode.gain.value = 1;
+        source.connect(gainNode);
+        const filter = audioCtx.createBiquadFilter();
+        filter.type = "lowpass";
+        filter.frequency.value = freq * 2;
+        gainNode.connect(filter);
+        filter.connect(audioCtx.destination);
+        source.start();
+      };
+
+      window.startDecode = async () => {
+        const startDecodeButton = document.getElementById("start-decode");
+        startDecodeButton.disabled = true;
+
+        const now = new Date();
+        const seconds = now.getSeconds();
+        const waitSeconds = 15 - (seconds % 15);
+        if (waitSeconds !== 0 && waitSeconds !== 15) {
+          await new Promise((resolve) =>
+            setTimeout(resolve, waitSeconds * 1000)
+          );
+        }
+
+        setTimeout(startDecode, 15 * 1000);
+
+        navigator.mediaDevices
+          .getUserMedia({ audio: true })
+          .then((stream) => {
+            const mediaRecorder = new MediaRecorder(stream);
+            const audioChunks = [];
+
+            mediaRecorder.start();
+
+            mediaRecorder.addEventListener("dataavailable", (event) => {
+              audioChunks.push(event.data);
+            });
+
+            setTimeout(() => {
+              mediaRecorder.stop();
+            }, 15 * 1000);
+
+            mediaRecorder.addEventListener("stop", () => {
+              const audioBlob = new Blob(audioChunks);
+              const audioUrl = URL.createObjectURL(audioBlob);
+              const audio = new Audio(audioUrl);
+
+              const audioContext = new AudioContext();
+              const reader = new FileReader();
+              reader.onload = function (ev) {
+                audioContext.decodeAudioData(
+                  ev.target.result,
+                  function (buffer) {
+                    const offlineContext = new OfflineAudioContext(
+                      buffer.numberOfChannels,
+                      (buffer.length * SAMPLE_RATE) / buffer.sampleRate,
+                      SAMPLE_RATE
+                    );
+                    const source = offlineContext.createBufferSource();
+                    source.buffer = buffer;
+
+                    source.connect(offlineContext.destination);
+                    source.start(0);
+
+                    return offlineContext
+                      .startRendering()
+                      .then(function (renderedBuffer) {
+                        const audioBuffer = renderedBuffer.getChannelData(0);
+                        return decode(audioBuffer);
+                      })
+                      .then((result) => {
+                        const output = document.getElementById("output");
+                        output.value += result
+                          .map((item) => JSON.stringify(item))
+                          .join("\n");
+                        output.scrollTop = output.scrollHeight;
+                      });
+                  }
+                );
+              };
+              reader.readAsArrayBuffer(audioBlob);
+            });
+          })
+          .catch((error) => console.error("Audio recording failed: ", error));
+      };
+
+      setInterval(() => {
+        const now = new Date();
+        const seconds = now.getSeconds();
+        const progress = document.getElementById("time");
+        progress.value = seconds % 15;
+      }, 1000);
+    </script>
+  </body>
+</html>
