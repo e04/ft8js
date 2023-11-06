@@ -1,25 +1,39 @@
 {
   "name": "ft8js",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "encode/decode ft8 signal with wasm-compiled ft8_lib",
-  "keywords": ["ft8", "sdr", "ham radio", "amateur radio"],
+  "keywords": [
+    "ft8",
+    "sdr",
+    "ham radio",
+    "amateur radio"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/e04/ft8js.git"
+  },
+  "license": "MIT",
+  "author": "e04",
+  "type": "module",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "build-js": "rollup -c",
-    "build-wasm:encode": "emcc -s EXPORT_NAME=\"'___ft8jsEncodeModule___'\" -Ift8_lib -sSTACK_SIZE=2MB src/encode.c ft8_lib/ft8/message.c ft8_lib/ft8/text.c ft8_lib/ft8/encode.c ft8_lib/ft8/constants.c ft8_lib/ft8/crc.c -o wasm/encode.js -sEXPORTED_FUNCTIONS='[\"_exec_encode\", \"_free\", \"_malloc\"]' -sEXPORTED_RUNTIME_METHODS=cwrap -s ASYNCIFY=1 -s 'ASYNCIFY_IMPORTS=[\"_exec_encode\"]' --no-entry -flto -s EXPORT_ES6=1 -s NO_FILESYSTEM=1 -s ALLOW_MEMORY_GROWTH=1 -s AUTO_NATIVE_LIBRARIES=0",
-    "build-wasm:decode": "emcc -s EXPORT_NAME=\"'___ft8jsDecodeModule___'\" -Ift8_lib -sSTACK_SIZE=5MB src/decode.c ft8_lib/ft8/message.c ft8_lib/ft8/text.c ft8_lib/ft8/decode.c ft8_lib/ft8/encode.c ft8_lib/ft8/constants.c ft8_lib/ft8/crc.c ft8_lib/ft8/ldpc.c ft8_lib/common/audio.c ft8_lib/common/monitor.c ft8_lib/common/wave.c ft8_lib/fft/kiss_fft.c ft8_lib/fft/kiss_fftr.c  -o wasm/decode.js -sEXPORTED_FUNCTIONS='[\"_init_decode\", \"_exec_decode\", \"_free\", \"_malloc\"]' -sEXPORTED_RUNTIME_METHODS=cwrap -s ASYNCIFY=1 -s 'ASYNCIFY_IMPORTS=[\"_exec_decode\"]' --no-entry -flto -s EXPORT_ES6=1 -s NO_FILESYSTEM=1 -s ALLOW_MEMORY_GROWTH=1 -s AUTO_NATIVE_LIBRARIES=0"
+    "build-wasm:decode": "emcc -s EXPORT_NAME=\"'___ft8jsDecodeModule___'\" -Ift8_lib -sSTACK_SIZE=5MB src/decode.c ft8_lib/ft8/message.c ft8_lib/ft8/text.c ft8_lib/ft8/decode.c ft8_lib/ft8/encode.c ft8_lib/ft8/constants.c ft8_lib/ft8/crc.c ft8_lib/ft8/ldpc.c ft8_lib/common/audio.c ft8_lib/common/monitor.c ft8_lib/common/wave.c ft8_lib/fft/kiss_fft.c ft8_lib/fft/kiss_fftr.c  -o wasm/decode.js -sEXPORTED_FUNCTIONS='[\"_init_decode\", \"_exec_decode\", \"_free\", \"_malloc\"]' -sEXPORTED_RUNTIME_METHODS=cwrap -s ASYNCIFY=1 -s 'ASYNCIFY_IMPORTS=[\"_exec_decode\"]' --no-entry -flto -s EXPORT_ES6=1 -s NO_FILESYSTEM=1 -s ALLOW_MEMORY_GROWTH=1 -s AUTO_NATIVE_LIBRARIES=0",
+    "build-wasm:encode": "emcc -s EXPORT_NAME=\"'___ft8jsEncodeModule___'\" -Ift8_lib -sSTACK_SIZE=2MB src/encode.c ft8_lib/ft8/message.c ft8_lib/ft8/text.c ft8_lib/ft8/encode.c ft8_lib/ft8/constants.c ft8_lib/ft8/crc.c -o wasm/encode.js -sEXPORTED_FUNCTIONS='[\"_exec_encode\", \"_free\", \"_malloc\"]' -sEXPORTED_RUNTIME_METHODS=cwrap -s ASYNCIFY=1 -s 'ASYNCIFY_IMPORTS=[\"_exec_encode\"]' --no-entry -flto -s EXPORT_ES6=1 -s NO_FILESYSTEM=1 -s ALLOW_MEMORY_GROWTH=1 -s AUTO_NATIVE_LIBRARIES=0"
   },
-  "author": "e04",
-  "license": "MIT",
-  "dependencies": {
+  "devDependencies": {
     "@rollup/plugin-typescript": "^11.1.5",
     "rollup": "^4.3.0",
     "rollup-plugin-copy": "^3.5.0",
     "tslib": "^2.6.2",
-    "typescript": "^5.2.2"
-  },
-  "type": "module",
-  "devDependencies": {
+    "typescript": "^5.2.2",
     "wav-decoder": "^1.3.0"
-  }
+  },
+  "files": [
+    "dist",
+    "src",
+    "example",
+    "wasm"
+  ]
 }
