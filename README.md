@@ -1,8 +1,8 @@
 # ft8js
 
-Thanks to [ft8_lib](https://github.com/kgoba/ft8_lib), we can encode/decode in a variety of environments.
+Thanks to [ft8_lib](https://github.com/kgoba/ft8_lib), we can encode/decode FT8 signals in a variety of environments.
 
-This repository compiled the code into WebAssembly (WASM) and created JavaScript code for seamless integration.
+This repository compiled the library into WebAssembly (WASM) and created JavaScript code for seamless integration.
 　
 ## Demo
 
