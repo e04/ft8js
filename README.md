@@ -1,4 +1,6 @@
-# ft8js
+# ft8js 
+
+ft8js is an experimental FT8 decoder and encoder library for Node.js/Web Browser.
 
 Thanks to [ft8_lib](https://github.com/kgoba/ft8_lib), we can encode/decode FT8 signals in a variety of environments.
 
