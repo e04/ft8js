@@ -2179,6 +2179,7 @@ const decode = async (input) => {
         .replaceAll("\x00", "")
         .trim()
         .split("\n")
+        .filter((row) => row.length > 0)
         .map((row) => {
         const splitted = row.split(",");
         return {
