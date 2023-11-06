@@ -19,3 +19,13 @@ npm run build-wasm:encode
 npm run build-wasm:decode
 npm run build-js
 ```
+
+## Example
+
+https://e04.github.io/ft8js/example/browser/index.html
+
+or 
+
+`node example/node/encode`
+
+`node example/node/decode`
