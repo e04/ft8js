@@ -1,10 +1,26 @@
 # ft8js
 
-Thanks to [ft8_lib](https://github.com/kgoba/ft8_lib), we can encode/decode in a variety of environments.
+Thanks to [ft8_lib](https://github.com/kgoba/ft8_lib), we can encode/decode FT8 signals in a variety of environments.
 
-I've compiled it into WebAssembly (WASM) and created experimental JavaScript code for seamless integration.
+This repository compiled the library into WebAssembly (WASM) and created JavaScript code for seamless integration.
+　
+## Demo
 
-## Build
+https://e04.github.io/ft8js/example/browser/index.html
+
+or 
+
+`node example/node/encode`
+
+`node example/node/decode`
+
+## Usage
+
+`npm i ft8js`
+
+For code examples, please refer to the `example` directory.
+
+## Development
 
 1. Clone [ft8_lib](https://github.com/kgoba/ft8_lib)
 
@@ -19,13 +35,3 @@ npm run build-wasm:encode
 npm run build-wasm:decode
 npm run build-js
 ```
-
-## Example
-
-https://e04.github.io/ft8js/example/browser/index.html
-
-or 
-
-`node example/node/encode`
-
-`node example/node/decode`
