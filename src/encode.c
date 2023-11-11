@@ -150,18 +150,9 @@ int exec_encode(char* message, float frequency, float* signal)
 
     // Third, convert the FSK tones into an audio signal
     int sample_rate = 12000;
-    int num_samples = (int)(0.5f + num_tones * symbol_period * sample_rate); // Number of samples in the data signal
-    int num_silence = (slot_time * sample_rate - num_samples) / 2;           // Silence padding at both ends to make 15 seconds
-    int num_total_samples = num_silence + num_samples + num_silence;         // Number of samples in the padded signal
-
-    for (int i = 0; i < num_silence; i++)
-    {
-        signal[i] = 0;
-        signal[i + num_samples + num_silence] = 0;
-    }
 
     // Synthesize waveform data (signal) and save it as WAV file
-    synth_gfsk(tones, num_tones, frequency, symbol_bt, symbol_period, sample_rate, signal + num_silence);
+    synth_gfsk(tones, num_tones, frequency, symbol_bt, symbol_period, sample_rate, signal);
 
     return 0;
 }
