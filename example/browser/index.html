@@ -31,11 +31,11 @@
         const source = audioCtx.createBufferSource();
         source.buffer = audioBuffer;
         const gainNode = audioCtx.createGain();
-        gainNode.gain.value = 1;
+        gainNode.gain.value = 0.5;
         source.connect(gainNode);
         const filter = audioCtx.createBiquadFilter();
         filter.type = "lowpass";
-        filter.frequency.value = freq * 2;
+        filter.frequency.value = freq;
         gainNode.connect(filter);
         filter.connect(audioCtx.destination);
         source.start();
