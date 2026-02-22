@@ -1,11 +1,15 @@
 # ft8js 
 
+> [!WARNING]
+> A new Pure TypeScript implementation, **[e04/ft8ts](https://github.com/e04/ft8ts)**, is now available.
+> Unlike `ft8js` which relies on WebAssembly (WASM), `ft8ts` runs natively in JavaScript/TypeScript environments.
+
 ft8js is an experimental FT8 decoder and encoder library for Node.js/Web Browser.
 
 Thanks to [ft8_lib](https://github.com/kgoba/ft8_lib), we can encode/decode FT8 signals in a variety of environments.
 
 This repository compiled the library into WebAssembly (WASM) and created JavaScript code for seamless integration.
-　
+ 
 ## Example
 
 https://e04.github.io/ft8js/example/browser/index.html
